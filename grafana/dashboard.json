@@ -1,0 +1,2822 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 11,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 0,
+          "y": 0
+        },
+        "id": 5,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT height FROM blocks ORDER BY height DESC LIMIT 1;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Latest Block Height",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 3,
+          "y": 0
+        },
+        "id": 7,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT \n    AVG(time_diff) AS avg_time_between_blocks\nFROM (\n    SELECT \n        EXTRACT(EPOCH FROM (b2.time - b1.time)) AS time_diff\n    FROM \n        blocks b1\n    JOIN \n        blocks b2 ON b2.height = b1.height + 1\n    WHERE $__timeFilter(b1.time) AND $__timeFilter(b2.time)\n) AS time_diffs;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Avg block time",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 6,
+          "y": 0
+        },
+        "id": 8,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT \n    EXTRACT(EPOCH FROM (NOW() - MAX(time))) AS time_since_latest_block_seconds\nFROM \n    blocks;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Last block",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 9,
+          "y": 0
+        },
+        "id": 11,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT MAX(total_txs) FROM blocks;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Total TXs",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "validator_addr"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 368
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "validator_name"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 132
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 3,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "WITH validators_latest_signed_blocks AS (\n  SELECT\n    validator_addr,\n    MAX(bs.block_height) AS latest_block_signed\n  FROM\n    block_signatures AS bs\n  WHERE \n    bs.signed = TRUE\n  GROUP BY \n    bs.validator_addr\n  ORDER BY \n    latest_block_signed ASC\n)\nSELECT\n    v.validator_name,\n    bs.validator_addr,\n    bs.latest_block_signed\nFROM validators_latest_signed_blocks AS bs\nJOIN validators AS v ON bs.validator_addr = v.validator_addr\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "block_signatures"
+          },
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "",
+            "refId": "B",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Latest signed block",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 0,
+          "y": 5
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT COUNT(*) FROM validators;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Number of validators",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 3,
+          "y": 5
+        },
+        "id": 9,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH block_times AS (\n    SELECT \n        time,\n        LAG(time) OVER (ORDER BY height) AS previous_time\n    FROM \n        blocks\n    WHERE \n        $__timeFilter(time)\n),\ntime_diffs AS (\n    SELECT \n        EXTRACT(EPOCH FROM (time - previous_time)) AS diff_seconds\n    FROM \n        block_times\n    WHERE \n        previous_time IS NOT NULL\n)\nSELECT \n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY diff_seconds) AS median_block_time\nFROM \n    time_diffs;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Median block time",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 6,
+          "y": 5
+        },
+        "id": 19,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT \n    EXTRACT(EPOCH FROM (NOW() - MIN(time))) AS time_since_latest_block_seconds\nFROM \n    blocks;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Time since block 1",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 9,
+          "y": 5
+        },
+        "id": 12,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT SUM(num_txs) FROM blocks WHERE $__timeFilter(time);\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "TXs over period",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 6,
+          "x": 0,
+          "y": 10
+        },
+        "id": 1,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT\n    v.validator_name,\n    COUNT(bs.block_height) AS non_signed_blocks\nFROM\n    validators v\nLEFT JOIN\n    block_signatures bs ON v.validator_addr = bs.validator_addr\nWHERE\n    bs.signed = FALSE\nGROUP BY\n    v.validator_name\nORDER BY\n    non_signed_blocks DESC;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Total missed block per validator",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 18,
+          "x": 6,
+          "y": 10
+        },
+        "id": 2,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "time_series",
+            "rawQuery": true,
+            "rawSql": "WITH missed_blocks_per_minute AS (\n    SELECT\n        date_trunc('minute', b.time) AS \"time\",\n        v.validator_name,\n        COUNT(*) AS missed_blocks\n    FROM\n        blocks b\n    LEFT JOIN\n        block_signatures bs ON b.height = bs.block_height\n    LEFT JOIN\n        validators v ON bs.validator_addr = v.validator_addr\n    WHERE\n        bs.signed = FALSE\n        AND $__timeFilter(b.time)\n    GROUP BY\n        date_trunc('minute', b.time), v.validator_name\n),\ncumulative_missed_blocks AS (\n    SELECT\n        \"time\",\n        validator_name,\n        SUM(missed_blocks) OVER (PARTITION BY validator_name ORDER BY \"time\" ASC) AS cumulative_missed_blocks\n    FROM\n        missed_blocks_per_minute\n)\nSELECT\n    \"time\",\n    validator_name,\n    cumulative_missed_blocks AS \" \"\nFROM\n    cumulative_missed_blocks\nORDER BY\n    \"time\" ASC, validator_name ASC;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Block missed per validator",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 7,
+          "x": 0,
+          "y": 20
+        },
+        "id": 26,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "time_series",
+            "rawQuery": true,
+            "rawSql": "SELECT\n    NOW()           AS time,\n    validator_name  AS data,\n    COUNT(*)        AS \" \"  \nFROM\n    blocks\nJOIN validators ON blocks.proposer_address = validators.validator_addr\nWHERE $__timeFilter(time) \nGROUP BY\n    1, 2\nORDER BY 2",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Block proposer",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "validator_addr"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 368
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "validator_name"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 132
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "proposer_address"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 407
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 14,
+          "x": 7,
+          "y": 20
+        },
+        "id": 14,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT\n    validator_name,\n    proposer_address,\n    COUNT(*) AS nb_block_proposed\nFROM\n    blocks\nJOIN validators ON blocks.proposer_address = validators.validator_addr\nWHERE $__timeFilter(time) \nGROUP BY\n    validator_name, proposer_address\nORDER BY\n    nb_block_proposed DESC;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "block_signatures"
+          }
+        ],
+        "title": "Validators block proposer",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "validator_addr"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 368
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "validator_name"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 132
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "proposer_address"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 407
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 21,
+          "x": 0,
+          "y": 29
+        },
+        "id": 33,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH block_diffs AS (\n    SELECT\n        height,\n        time,\n        COALESCE(EXTRACT(EPOCH FROM (time - LAG(time) OVER (ORDER BY height))), 0) AS time_diff_seconds\n    FROM\n        blocks\n)\nSELECT\n    height,\n    time,\n    time_diff_seconds\nFROM\n    block_diffs\nWHERE\n    time_diff_seconds > 25\nORDER BY\n    height DESC;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "block_signatures"
+          }
+        ],
+        "title": "Long time blocks",
+        "type": "table"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 38
+        },
+        "id": 20,
+        "panels": [],
+        "title": "Transactions",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 39
+        },
+        "id": 10,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT \n  time, total_txs\nFROM blocks\nWHERE $__timeFilter(time) \n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Total transactions",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 39
+        },
+        "id": 28,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "time_series",
+            "rawQuery": true,
+            "rawSql": "SELECT \n  $__timeGroup(time, $__interval),\n  SUM(num_txs)\nFROM blocks\nWHERE $__timeFilter(time) \nGROUP BY 1\nORDER BY 1",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Transaction on (interval: $__interval)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 0,
+          "y": 47
+        },
+        "id": 24,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "time_series",
+            "rawQuery": true,
+            "rawSql": "SELECT\n  NOW()        AS time,\n  route         AS data,\n  count(route)  AS \" \"\nFROM messages  AS msg\nJOIN blocks    AS b ON b.height = msg.height\nWHERE $__timeFilter(b.time) \nGROUP BY data\nORDER BY 3 DESC;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Transactions per routes",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 5,
+          "x": 4,
+          "y": 47
+        },
+        "id": 23,
+        "options": {
+          "displayLabels": [
+            "name",
+            "value"
+          ],
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "time_series",
+            "rawQuery": true,
+            "rawSql": "SELECT\n  NOW()        AS time,\n  type         AS data,\n  count(type)  AS \" \"\nFROM messages  AS msg\nJOIN blocks    AS b ON b.height = msg.height\nWHERE $__timeFilter(b.time)\nGROUP BY data\nORDER BY 3 DESC;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Transactions per types",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 15,
+          "x": 9,
+          "y": 47
+        },
+        "id": 25,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "time_series",
+            "rawQuery": true,
+            "rawSql": "WITH pkg_paths AS (\n  SELECT  msg_raw->>'pkg_path' AS pkg_path FROM messages WHERE msg_raw->>'pkg_path' IS NOT NULL\n)\nSELECT\n  NOW()           AS time,\n  pkg_path        AS data,\n  COUNT(pkg_path) AS \" \"\n  FROM pkg_paths\n  GROUP BY 1, 2\n  ORDER BY 3 DESC;\n\n-- SELECT\n--   NOW()        AS time,\n--   route         AS data,\n--   count(route)  AS value\n-- FROM messages  AS msg\n-- JOIN blocks    AS b ON b.height = msg.height\n-- WHERE $__timeFilter(b.time) \n-- GROUP BY data\n-- ORDER BY value DESC;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Messages per pkg_path",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "type"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 114
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 81
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "route"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 115
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 4,
+          "x": 0,
+          "y": 53
+        },
+        "id": 17,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": " SELECT route, COUNT(route) AS \"count\" FROM  messages GROUP BY route;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Transactions routes",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "type"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 139
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 81
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 5,
+          "x": 4,
+          "y": 53
+        },
+        "id": 15,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": " SELECT type, COUNT(type) AS \"count\" FROM  messages GROUP BY type;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Transactions types",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "type"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 114
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 81
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 15,
+          "x": 9,
+          "y": 53
+        },
+        "id": 18,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH pkg_paths AS (\n  SELECT  msg_raw->>'pkg_path' AS pkg_path FROM messages WHERE msg_raw->>'pkg_path' IS NOT NULL\n)\nSELECT pkg_path, COUNT(pkg_path) FROM pkg_paths GROUP BY 1 ORDER BY 2 DESC;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Messages count per pkg_path",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "type"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 114
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 81
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "height"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 85
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "route"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 101
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "time"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 181
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 61
+        },
+        "id": 22,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT b.time, msg.height, msg.route, msg.type, msg.msg_raw\nFROM messages AS msg\nJOIN blocks   AS b ON b.height = msg.height\nWHERE $__timeFilter(b.time) \nORDER BY height DESC;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Transactions messages",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 5,
+          "x": 0,
+          "y": 69
+        },
+        "id": 29,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT \n  COUNT(*)\nFROM messages \nWHERE route = 'bank'\n  AND type  = 'send'\n  AND msg_raw->>'from_address' IN (\n    'g1njagaeg7e398hze39ygfgvc4gwsh6lkz7dwnuz',\n    'g1a5kdc6ykfykq9p6088sclnr7e63hj8y4nnr5gn',\n    'g1gadp0yq5djelxwv7h8g7wpdf7x5w3vuzwmqrne',\n    'g1s6ujq0r200a0tfqgnjfflz7ddetsnrwvzxxx74',\n    'g1d7set9rsdw7ggt9elvzerep4jz80a4hu4crmzg',\n    'g1cm7u2fqd7drwfcqtn7zsgrfcyvlkkukhhtrxxj',\n    'g13csus64lj8twrn266837l9e77dusk2zwa794qz',\n    'g1knpjkw7d5ft2830n8rnatllzq9gu85dmn20nrp',\n    'g1563d3cw0gdv68le6azw2s63xm0jx9xvgpmfatq',\n    'g1xja7p9s3ly3tvkgks9x0n6f6yau2hnzl4x8x3d'\n  );\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Gnofaucet transfert count",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "displayName": "$GNOT",
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 5,
+          "x": 5,
+          "y": 69
+        },
+        "id": 30,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH faucet_gno_sent AS (\n\nSELECT \n  (jsonb_array_elements((msg_raw->>'amount')::JSONB) ->> 'amount')::NUMERIC / 1000000 AS sent\nFROM messages \nWHERE route = 'bank'\n  AND type  = 'send'\n  AND msg_raw->>'from_address' IN (\n    'g1njagaeg7e398hze39ygfgvc4gwsh6lkz7dwnuz',\n    'g1a5kdc6ykfykq9p6088sclnr7e63hj8y4nnr5gn',\n    'g1gadp0yq5djelxwv7h8g7wpdf7x5w3vuzwmqrne',\n    'g1s6ujq0r200a0tfqgnjfflz7ddetsnrwvzxxx74',\n    'g1d7set9rsdw7ggt9elvzerep4jz80a4hu4crmzg',\n    'g1cm7u2fqd7drwfcqtn7zsgrfcyvlkkukhhtrxxj',\n    'g13csus64lj8twrn266837l9e77dusk2zwa794qz',\n    'g1knpjkw7d5ft2830n8rnatllzq9gu85dmn20nrp',\n    'g1563d3cw0gdv68le6azw2s63xm0jx9xvgpmfatq',\n    'g1xja7p9s3ly3tvkgks9x0n6f6yau2hnzl4x8x3d'\n  )\n)\nSELECT SUM(sent) FROM faucet_gno_sent;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Gnofaucet transfert amount $GNOT",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 10,
+          "y": 69
+        },
+        "id": 31,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH faucet_gno_sent AS (\n\nSELECT \n  (jsonb_array_elements((msg_raw->>'amount')::JSONB) ->> 'amount')::NUMERIC / 1000000 AS sent\nFROM messages \nWHERE route = 'bank'\n  AND type  = 'send'\n  AND msg_raw->>'from_address' IN (\n    'g1njagaeg7e398hze39ygfgvc4gwsh6lkz7dwnuz',\n    'g1a5kdc6ykfykq9p6088sclnr7e63hj8y4nnr5gn',\n    'g1gadp0yq5djelxwv7h8g7wpdf7x5w3vuzwmqrne',\n    'g1s6ujq0r200a0tfqgnjfflz7ddetsnrwvzxxx74',\n    'g1d7set9rsdw7ggt9elvzerep4jz80a4hu4crmzg',\n    'g1cm7u2fqd7drwfcqtn7zsgrfcyvlkkukhhtrxxj',\n    'g13csus64lj8twrn266837l9e77dusk2zwa794qz',\n    'g1knpjkw7d5ft2830n8rnatllzq9gu85dmn20nrp',\n    'g1563d3cw0gdv68le6azw2s63xm0jx9xvgpmfatq',\n    'g1xja7p9s3ly3tvkgks9x0n6f6yau2hnzl4x8x3d'\n  )\n)\nSELECT\n  sent,\n  SUM(sent)\nFROM faucet_gno_sent\nGROUP BY 1\nORDER BY 2;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Gnofaucet transfert amount $GNOT",
+        "type": "table"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 75
+        },
+        "id": 16,
+        "panels": [],
+        "title": "tm2-indexer internal data",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 50
+                },
+                {
+                  "color": "red",
+                  "value": 100
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 4,
+          "x": 0,
+          "y": 76
+        },
+        "id": 27,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH count_missing_blocks AS ( SELECT gs.height\nFROM generate_series(1, (SELECT MAX(height) FROM blocks)) AS gs(height)\nLEFT JOIN blocks b ON gs.height = b.height\nWHERE b.height IS NULL\nORDER BY gs.height\n)\nSelect count(*) from count_missing_blocks;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Missing blocks",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${PSQL_TM2INDEXER_DS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "center",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "type"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 114
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 81
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 3,
+          "x": 4,
+          "y": 76
+        },
+        "id": 21,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "11.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${PSQL_TM2INDEXER_DS}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT gs.height\nFROM generate_series(1, (SELECT MAX(height) FROM blocks)) AS gs(height)\nLEFT JOIN blocks b ON gs.height = b.height\nWHERE b.height IS NULL\nORDER BY gs.height;",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Missing blocks",
+        "type": "table"
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "tm2-indexer - test5",
+            "value": "be3pvlkvwyiv4e"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "DATASOURCE",
+          "multi": false,
+          "name": "PSQL_TM2INDEXER_DS",
+          "options": [],
+          "query": "postgres",
+          "queryValue": "",
+          "refresh": 1,
+          "regex": "tm2-indexer.*",
+          "skipUrlSync": false,
+          "type": "datasource"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-7d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Gno.land networks",
+    "uid": "c72c5719-f2ff-414c-939a-b305a03522fc",
+    "version": 37,
+    "weekStart": ""
+  }
