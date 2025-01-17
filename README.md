@@ -1,7 +1,5 @@
 # TM2 Indexer
 
-![TM2 Indexer](https://github.com/gnoverse/tm2-indexer/.github/assets/banner.png)
-
 <img src="https://github.com/gnoverse/tm2-indexer/blob/master/.github/assets/banner.png?raw=true" width="400" height="400"/>
 
 The TM2 Indexer is a robust and efficient indexing solution designed for Tendermint 2 based blockchain.
