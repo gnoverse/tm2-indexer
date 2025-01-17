@@ -62,6 +62,10 @@ CREATE TABLE IF NOT EXISTS messages (
 
 -- TODO: create a table events for all the emits data from BlockResults
 
+CREATE INDEX IF NOT EXISTS idx_block_signatures_block_height_signed ON block_signatures (block_height, signed);
+CREATE INDEX IF NOT EXISTS idx_blocks_height ON blocks (height);
+CREATE INDEX IF NOT EXISTS idx_validators_validator_addr ON validators (validator_addr);
+
 CREATE INDEX IF NOT EXISTS idx_blocks_time                     ON blocks(time);
 CREATE INDEX IF NOT EXISTS idx_block_signatures_block_height   ON block_signatures(block_height);
 CREATE INDEX IF NOT EXISTS idx_block_signatures_validator_addr ON block_signatures(validator_addr);
@@ -75,3 +79,4 @@ CREATE INDEX IF NOT EXISTS idx_messages_tx_hash_index       ON messages(tx_hash,
 -- gave read only access to grafana user for dashboards
 -- GRANT USAGE ON SCHEMA public to grafana;
 -- GRANT SELECT ON ALL TABLES IN SCHEMA public TO grafana;
+
