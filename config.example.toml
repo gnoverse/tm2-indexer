@@ -1,0 +1,18 @@
+[rpc]
+endpoint = "http://localhost:26657"
+
+[database]
+endpoint = "postgresql://postgres:postgres@127.0.0.1:5432/tm2-indexer?sslmode=disable"
+
+[chain]
+[chain.validators]
+core-val-01   = "g1xxxxxx"
+core-val-02   = "g1yyyyyy"
+core-val-03   = "g1zzzzzz"
+
+[scrapper]
+batch_write = 300
+goro_block_parser = 32
+
+buffer_chan_blocks = 1000
+buffer_chan_heights = 10000
