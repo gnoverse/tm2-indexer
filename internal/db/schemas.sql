@@ -76,6 +76,9 @@ CREATE INDEX IF NOT EXISTS idx_transactions_hash            ON transactions(hash
 CREATE INDEX IF NOT EXISTS idx_messages_height_tx_hash      ON messages(height, tx_hash);
 CREATE INDEX IF NOT EXISTS idx_messages_tx_hash_index       ON messages(tx_hash, index);
 
+CREATE INDEX IF NOT EXISTS idx_block_signatures_signed_validator_addr_block_height ON block_signatures (signed, validator_addr, block_height);
+CREATE INDEX IF NOT EXISTS idx_block_signatures_block_height_asc ON block_signatures (block_height ASC);
+
 -- gave read only access to grafana user for dashboards
 -- GRANT USAGE ON SCHEMA public to grafana;
 -- GRANT SELECT ON ALL TABLES IN SCHEMA public TO grafana;

@@ -110,6 +110,10 @@ func main() {
 	}).Info("Starting")
 
 	height := latestBlockHeightStored + int64(config.Scrapper.BatchWrite)
+	if height > latestBlock {
+		height = latestBlock
+	}
+
 	// Insert validators
 	validatorResp, err := rpc.RPCClient.Validators(&height)
 	if err != nil {
