@@ -153,8 +153,8 @@ func main() {
 	wgHeights := sync.WaitGroup{}
 	wgBlocks := sync.WaitGroup{}
 
+	wgBlocks.Add(1)
 	go func() {
-		wgBlocks.Add(1)
 		defer wgBlocks.Done()
 
 		blockBuff := make([]*db.Block, 0, config.Scrapper.BatchWrite)
@@ -197,7 +197,8 @@ func main() {
 					if strings.Contains(err.Error(), `block proposer is an unknown validator`) {
 						// TODO: Get validators on this block and update database
 					} else if strings.Contains(err.Error(), `missing validators informations`) {
-						break
+						logrus.WithError(err).Error()
+						continue
 					}
 
 					logrus.WithError(err).WithFields(logrus.Fields{
